@@ -40,21 +40,19 @@ class SpiralMemory {
             }
         }
 
-        $this->squareValues = $this->squares;
-        $this->squareValues[1]['value'] = 1;
-        for ($i=2; $i <= count($this->squareValues); $i++) { 
-            if (isset($this->squareValues[$i]['value']));
-            $neighbours = $this->adjacentOf($i);
-            $value = 0;
-            foreach ($neighbours as $square => $data) {
-                $value += $data['value'];
-            } 
-            if ($value > $this->squaresToCreate) {
+        #$this->squareValues = $this->squares;
+        #$this->squareValues[1]['value'] = 1;
+        $this->squares[1][2] = 1;
+        for ($i=2; $i <= count($this->squares); $i++) { 
+            if (isset($this->squares[$i][2])) continue;
+            $value = $this->adjacentOf($i);
+            $this->squares[$i][2] = $value;
+            if ($value >= $this->squaresToCreate) {
                 \var_dump($i);
-                die(var_dump($this->squareValues[$i]));
+                die(var_dump($this->squares[$i]));
             }
-            $this->squareValues[$i]['value'] = $value;
         }
+        die(var_dump($this->squares));
     }
 
     public function stepsInDirection($direction, $steps)
@@ -89,20 +87,28 @@ class SpiralMemory {
     public function adjacentOf($square)
     {
         $neighbours = $this->adjacentCoordinates($square);
-        $adjacent = array_filter($this->squares, function ($square) use ($neighbours) {
+        $value = 0;
+        foreach ($this->squares as $square) {
             foreach ($neighbours as $neighbour) {
-                if ($neighbour == $square) {
-                    return $square;
+                if ( ($neighbour[0] == $square[0]) && ($neighbour[1] == $square[1]) ) {
+                    if (isset($square[2])) {
+                        $value += $square[2];
+                    }
                 }
             }
-        });
-        $adjacentWithValues = [];
+        }
+        return $value;
+        /* $adjacent = array_filter($this->squares, function ($square) use ($neighbours) {
+            return $value;
+        }); */
+        die(var_dump($adjacent));
+        /* $adjacentWithValues = [];
         foreach ($adjacent as $key => $value) {
             if (isset($this->squareValues[$key]['value'])) {
                 $adjacentWithValues[$key] = $this->squareValues[$key];
             }
         }        
-        return $adjacentWithValues;
+        return $adjacentWithValues; */
     }
 
     public function adjacentCoordinates($square)
