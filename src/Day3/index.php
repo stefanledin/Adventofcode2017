@@ -1,4 +1,5 @@
 <?php
-require('vendor/autoload.php');
-$spiral = new Advent\Day3\SpiralMemory(23);
-#var_dump($spiral->squares);
+require('../../vendor/autoload.php');
+$spiral = new Advent\Day3\SpiralMemory(289326);
+#$spiral = new Advent\Day3\SpiralMemory(23);
+#echo $spiral->stepsFor(289326);
