@@ -55,6 +55,22 @@ class TestMemoryReallocation extends TestCase {
         $this->assertCount(5, $memory->previousBanks);
     }
 
+    public function test2_as_real()
+    {
+        $banks = '0 2 7 0';
+        $memory = new Memory($banks);
+        #while (count(array_unique($memory->allBanks)) == count($memory->allBanks)) {
+        while (!in_array($memory->getBanksAsString(), $memory->previousBanks)) {
+            if (count($memory->allBanks) - count(array_unique($memory->allBanks)) == 2) {
+                die(var_dump(count($memory->banks)));
+            }
+            $memory->moveBlock($memory->largestBlockIndex());
+        }
+        #die(var_dump($memory->allBanks));
+        $this->assertEquals(4, $i);
+        #$this->assertCount(4, $memory->banks);
+    }
+
     public function test_real_input()
     {
         $input = '11 11 13 7 0 15 5 5 4 4 1 1 7 1 15 11';

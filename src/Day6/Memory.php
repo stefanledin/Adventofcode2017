@@ -4,6 +4,7 @@ namespace Advent\Day6;
 class Memory {
     public $banks;
     public $previousBanks = [];
+    public $allBanks = [];
 
     public function __construct($banks)
     {
@@ -19,6 +20,7 @@ class Memory {
         $this->banks[$fromIndex] = 0;
         $i = $fromIndex;
         while ($blocksToShare > 0) {
+            $this->allBanks[] = implode(' ', $this->banks);
             $i++;
             if ($i == count($this->banks)) {
                 $i = 0;
@@ -30,6 +32,7 @@ class Memory {
                 $blocksToShare--;
             }
         }
+        $this->allBanks[] = implode(' ', $this->banks);
     }
 
     public function largestBlockValue() {
@@ -39,8 +42,6 @@ class Memory {
     public function largestBlockIndex()
     {
         $banks = $this->banks;
-        #natsort($banks);
-        #$banks = array_values($banks);
         $banks = array_unique($banks);
         arsort($banks);
         return key($banks);
