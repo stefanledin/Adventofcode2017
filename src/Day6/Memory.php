@@ -20,7 +20,7 @@ class Memory {
         $this->banks[$fromIndex] = 0;
         $i = $fromIndex;
         while ($blocksToShare > 0) {
-            $this->allBanks[] = implode(' ', $this->banks);
+            $ths->allBanks[] = implode(' ', $this->banks);
             $i++;
             if ($i == count($this->banks)) {
                 $i = 0;
